@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>body{
+        background: blanchedalmond;
+        
+    }
+    button a{
+        text-decoration: none;
+    }
+    img{
+        height: 350px;
+        width: 350px;
+    }</style>
+</head>
+<body>
+    <table id="table-1" border=""1>
+        <tr>
+            <th>player</th>
+            <th>selected</th>
+            <th>ID</th>
+        </tr>
+    </table>
+    <br><br>
+
+    <button><a href="selectddata.html">Get only selected data</a></button>
+<script>
+    async function fetechTable(){
+    try{
+        let res=await fetch("http://localhost:8080/getdata");
+        let data=await res.json();
+        console.log(data);
+
+  
+               let table = document.getElementById("table-1");
+
+               
+               data.forEach(element => {
+                   let tr = document.createElement("tr");
+
+                  
+                   let tdPlayer = document.createElement("td");
+                   tdPlayer.textContent = element.Player;
+                   tr.appendChild(tdPlayer);
+
+                   let tdSelected = document.createElement("td");
+                   tdSelected.textContent = element.selected === "true" ? "Yes" : "No";
+                   tr.appendChild(tdSelected);
+
+                   let tdId = document.createElement("td");
+                   tdId.textContent = element.id;
+                   tr.appendChild(tdId);
+
+                  
+                   table.appendChild(tr);
+               });
+           } catch (err) {
+               console.error("Error fetching data:", err);
+           }
+       }
+
+       // Call the function to fetch and display the data
+       fetchTable();
+</script>
+</body>
+</html>

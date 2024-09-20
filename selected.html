@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>selected data</title>
+</head>
+<body>
+    <h1>selected players</h1>
+    <table border="1" id="selected-table">
+        <tr>
+            <th>player</th>
+            <th>selected</th>
+            <th>ID</th>
+        </tr>
+    </table>
+    <script>
+        async function fetchSelectedData() {
+            try {
+             
+                let res = await fetch("http://localhost:8080/particulardata");
+                let data = await res.json();
+                console.log(data);  
+
+                let table = document.getElementById("selected-table");
+
+             
+                data.forEach(element => {
+                    let tr = document.createElement("tr");
+
+                    let tdPlayer = document.createElement("td");
+                    tdPlayer.textContent = element.Player;
+                    tr.appendChild(tdPlayer);
+
+                    let tdSelected = document.createElement("td");
+                    tdSelected.textContent = element.selected === "true" ? "Yes" : "No";
+                    tr.appendChild(tdSelected);
+
+                    let tdId = document.createElement("td");
+                    tdId.textContent = element.id;
+                    tr.appendChild(tdId);
+
+                    table.appendChild(tr);
+                });
+            } catch (err) {
+                console.error("Error fetching selected data:", err);
+            }
+        }
+
+        
+        fetchSelectedData();
+    </script>
+</body>
+</html>
