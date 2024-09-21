@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Username <input type="text" id="username"/><br/>
+    Password <input type="password" id="password"/><br/>
+    <input type="button" id="btn" value="Login"/>
+
+    <script>
+        const btn = document.querySelector("#btn");
+        const username = document.querySelector("#username");
+        const password = document.querySelector("#password");
+        btn.addEventListener("click",()=>{
+
+            let obj = {
+                username:username.value,
+                password:password.value
+            }
+            fetch("/Login",{
+                method:"POST",
+                body:JSON.stringify(obj),
+                headers:{"content-type":"application/json"}
+            }).then((response)=>{
+                return response.text();
+            }).then((response)=>{
+                alert(response);
+            })
+        })
+    </script>
+</body>
+</html>
